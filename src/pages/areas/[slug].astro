@@ -1,0 +1,81 @@
+---
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { areaBySlug, areas, business, services } from '../../data/site';
+
+export function getStaticPaths() {
+  return areas.map((area) => ({ params: { slug: area.slug } }));
+}
+
+const { slug } = Astro.params;
+const area = areaBySlug(slug!);
+if (!area) throw new Error(`Missing area ${slug}`);
+
+const nearby = area.nearby.map((item) => areaBySlug(item)).filter((item) => item !== undefined);
+const title = `Electrician in ${area.name} | AYBL Electrical`;
+const description = area.meta;
+const schema = [
+  {
+    '@type': 'Service',
+    name: `Electrician in ${area.name}`,
+    serviceType: 'Electrical installation',
+    url: new URL(`/areas/${area.slug}`, Astro.site).href,
+    provider: { '@id': `${Astro.site}#business` },
+    areaServed: {
+      '@type': 'City',
+      name: area.name,
+      containedInPlace: area.county,
+    },
+  },
+];
+---
+
+<Base title={title} description={description} path={`/areas/${area.slug}`} schema={schema}>
+  <section class="page-hero">
+    <div class="wrap">
+      <Crumbs
+        items={[
+          { href: '/', label: 'Home' },
+          { href: '/areas', label: 'Areas' },
+          { label: area.name },
+        ]}
+      />
+      <p class="kicker">{area.county}</p>
+      <h1>Electrician in {area.name}</h1>
+      <p class="lede">{area.summary} The yard is still {business.street}, Bedford, {business.postcode}.</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top: 0.4rem">
+    <div class="wrap two">
+      <div class="prose">
+        {area.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        <p>
+          Call <a href={`tel:${business.phoneTel}`}>{business.phoneDisplay}</a> or
+          <a href="/contact"> send the details</a>. Name the street or estate if you can, and say whether it is a house, a flat or a shop.
+        </p>
+      </div>
+      <aside class="panel">
+        <h2>Jobs in {area.name}</h2>
+        <ul>
+          {
+            services.slice(0, 6).map((service) => (
+              <li>
+                <a href={`/services/${service.slug}`}>{service.title}</a>
+              </li>
+            ))
+          }
+        </ul>
+        <h2 style="margin-top: 1.4rem">Nearby</h2>
+        <ul>
+          {
+            nearby.map((item) => (
+              <li>
+                <a href={`/areas/${item.slug}`}>Electrician in {item.name}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </aside>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,256 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { areas, business, faqs, projects, reviews, services } from '../data/site';
+import wallLight from '../assets/photos/wall-light.jpg';
+import van from '../assets/photos/van.jpg';
+
+const homeFaqs = {
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: { '@type': 'Answer', text: faq.a },
+  })),
+};
+
+const title = 'AYBL Electrical | Electrician in Bedford and Milton Keynes';
+const description =
+  'Bedford electrician for fuse boards, rewires, EV chargers, lighting and repairs. AYBL Electrical, 27 St Cuthbert’s Street. Call 01234 862212.';
+---
+
+<Base title={title} description={description} path="/" schema={[homeFaqs]}>
+  <section class="hero">
+    <div class="wrap-wide hero-grid">
+      <div>
+        <p class="kicker">Bedford, Milton Keynes and nearby towns</p>
+        <h1><span class="gold">Trusted electrician</span><br />services at your<br />doorstep</h1>
+        <p class="lede">
+          Fast, tidy electrical work for homes and businesses. AYBL Electrical is based at 27 St Cuthbert’s Street, Bedford, and works across Beds, Herts and Bucks.
+        </p>
+        <div class="hero-actions">
+          <a class="btn" href="/contact">
+            Book a technician
+            <span class="bubble" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                <path d="M5 12h14M13 6l6 6-6 6"></path>
+              </svg>
+            </span>
+          </a>
+          <a class="btn ghost" href="/projects">
+            <span class="bubble" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 7.5v9l8-4.5-8-4.5z"></path>
+              </svg>
+            </span>
+            Work demo
+          </a>
+        </div>
+      </div>
+      <figure class="hero-photo">
+        <Image
+          src={wallLight}
+          alt="Outdoor wall light with a sensor, fitted on brick and switched on."
+          widths={[480, 768, 1080]}
+          sizes="(min-width: 980px) 42vw, 100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </figure>
+    </div>
+    <p class="giant" aria-hidden="true">Trusted Electrician</p>
+  </section>
+
+  <section class="wrap-wide stats" aria-label="Company facts">
+    <article>
+      <strong>4.6</strong>
+      <span>Google rating from {business.reviewCount} reviews</span>
+    </article>
+    <article>
+      <strong>2013</strong>
+      <span>Antoni Harris has run the firm since then</span>
+    </article>
+    <article>
+      <strong>9 towns</strong>
+      <span>Named on the patch, from Bedford to Olney</span>
+    </article>
+    <article>
+      <strong>MK40</strong>
+      <span>27 St Cuthbert’s Street, Bedford</span>
+    </article>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Services</p>
+          <h2>The jobs people actually call about</h2>
+        </div>
+        <p class="muted">Fuse boards, rewires, chargers, lights, tests and the small repair that has been put off.</p>
+      </div>
+      <div class="cards">
+        {
+          services.map((service) => (
+            <a class="card" href={`/services/${service.slug}`}>
+              <h3>{service.title}</h3>
+              <p>{service.summary}</p>
+              <span class="more">See this service</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap split">
+      <figure class="frame">
+        <Image
+          src={van}
+          alt="Black IN2 Electrical van parked outside new houses."
+          widths={[480, 800, 1080]}
+          sizes="(min-width: 980px) 40vw, 100vw"
+        />
+        <figcaption>The van still says IN2 Electrical. Google lists the same firm as AYBL Electrical.</figcaption>
+      </figure>
+      <div>
+        <p class="kicker">About us</p>
+        <h2>A Bedford firm with two names and one director</h2>
+        <p>
+          Antoni Harris has run the business since 2013. The limited company, IN2 Electrical Ltd, was incorporated on 4 May 2016. Company number 10161275. The registered office is the same address as the Google listing: 27 St Cuthbert’s Street, Bedford.
+        </p>
+        <p>
+          Reviews talk about the same things, whether they say AYBL or IN2. He turns up, explains the job, and leaves the place tidy. Sam and Tom are named by customers on bigger visits.
+        </p>
+        <ul class="checklist">
+          <li>Written quote before work starts</li>
+          <li>Homes, shops, kiosks and council sites</li>
+          <li>Monday to Friday, 9am to 5pm. Saturday morning.</li>
+        </ul>
+        <p style="margin-top: 1.4rem">
+          <a class="btn plain" href="/about">About the company</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Projects</p>
+          <h2>Work from the firm’s own photos</h2>
+        </div>
+        <a href="/projects">All projects</a>
+      </div>
+      <div class="project-grid">
+        {
+          projects.slice(0, 6).map((project) => (
+            <a class="project-card" href="/projects">
+              <Image src={project.image} alt={project.alt} widths={[400, 700]} sizes="(min-width: 980px) 30vw, 100vw" />
+              <div>
+                <p class="meta">
+                  {project.place} · {project.year}
+                </p>
+                <h3>{project.title}</h3>
+                <p>{project.text}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Reviews</p>
+          <h2>4.6 on Google, from 18 reviews</h2>
+        </div>
+        <a href="/reviews">Read the reviews</a>
+      </div>
+      <p class="note">
+        These are public reviews, quoted from Google and Bark. The Google score is 4.6, so not every review is five stars. The lines below are the ones that are still published in full.
+      </p>
+      <div class="review-grid" style="margin-top: 1.2rem">
+        {
+          reviews.slice(0, 3).map((review) => (
+            <figure class="review-card">
+              <div class="stars" aria-label={`${review.rating} out of 5`}>★★★★★</div>
+              <blockquote>
+                <p>{review.text}</p>
+              </blockquote>
+              <footer>
+                <span>{review.name}</span>
+                <span>
+                  {review.source} · {review.date}
+                </span>
+              </footer>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Areas</p>
+          <h2>Towns on the round</h2>
+        </div>
+        <a href="/areas">How the patch works</a>
+      </div>
+      <div class="area-grid">
+        {
+          areas.map((area) => (
+            <a class="area-card" href={`/areas/${area.slug}`}>
+              <p class="meta">{area.county}</p>
+              <h3>Electrician in {area.name}</h3>
+              <p>{area.summary}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap">
+      <p class="kicker">Questions</p>
+      <h2>Straight answers</h2>
+      <div class="faq">
+        {
+          faqs.map((faq) => (
+            <details>
+              <summary>{faq.q}</summary>
+              <p>{faq.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap cta-inner section">
+      <div>
+        <p class="kicker">Book a visit</p>
+        <h2>Call {business.phoneDisplay}</h2>
+        <p class="muted">Or email {business.email}. Tell us the town, the job, and a time that suits.</p>
+      </div>
+      <a class="btn" href={`tel:${business.phoneTel}`}>
+        Call now
+        <span class="bubble" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7.2 3.8c.4-.4 1-.5 1.5-.3l2.2.9c.5.2.8.7.8 1.2l-.2 2.4a1.2 1.2 0 0 1-.7 1l-1.3.6a12 12 0 0 0 5.4 5.4l.6-1.3c.2-.4.6-.7 1-.7l2.4-.2c.5 0 1 .3 1.2.8l.9 2.2c.2.5 0 1.1-.3 1.5l-1.4 1.4c-.4.4-1 .6-1.6.5C10.8 18.6 5.4 13.2 4.7 6.8c-.1-.6.1-1.2.5-1.6l2-1.4z"></path>
+          </svg>
+        </span>
+      </a>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,70 @@
+---
+import { areas, business, services } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <h2>AYBL Electrical</h2>
+      <address>
+        {business.street}<br />
+        {business.locality}, {business.postcode}<br />
+        {business.country}
+      </address>
+      <p>
+        <a href={`tel:${business.phoneTel}`}>{business.phoneDisplay}</a><br />
+        <a href={`mailto:${business.email}`}>{business.email}</a>
+      </p>
+      <p class="muted">
+        Monday to Friday, 9am to 5pm<br />
+        Saturday, 9am to 1pm<br />
+        Sunday, closed
+      </p>
+    </div>
+    <div>
+      <h2>Services</h2>
+      <ul>
+        {
+          services.map((service) => (
+            <li>
+              <a href={`/services/${service.slug}`}>{service.nav}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div>
+      <h2>Areas</h2>
+      <ul>
+        {
+          areas.map((area) => (
+            <li>
+              <a href={`/areas/${area.slug}`}>{area.name}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div>
+      <h2>Company</h2>
+      <ul>
+        <li><a href="/about">About us</a></li>
+        <li><a href="/projects">Projects</a></li>
+        <li><a href="/reviews">Reviews</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/areas">Areas we cover</a></li>
+        <li><a href={business.mapsUrl}>Google profile</a></li>
+        <li><a href={business.instagram}>Instagram</a></li>
+        <li><a href="/privacy">Privacy</a></li>
+        <li><a href="/cookies">Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap legal">
+    <p>
+      © {year} {business.legalName}. Company number {business.companyNumber}. Trading as {business.name} and {business.alternateName}.
+    </p>
+    <p>Director: {business.director}. Registered office: {business.street}, {business.locality}, {business.postcode}.</p>
+  </div>
+</footer>

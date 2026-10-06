@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { areas } from '../../data/site';
+
+const title = 'Areas covered | AYBL Electrical, Bedford';
+const description =
+  'AYBL Electrical works from Bedford across Milton Keynes, Luton, Flitwick, Harpenden, Hitchin, Leighton Buzzard, Olney and Woburn Sands.';
+---
+
+<Base title={title} description={description} path="/areas">
+  <section class="page-hero">
+    <div class="wrap">
+      <Crumbs items={[{ href: '/', label: 'Home' }, { label: 'Areas we cover' }]} />
+      <p class="kicker">Local coverage</p>
+      <h1>Beds, Herts and Bucks, town by town</h1>
+      <p class="lede">
+        The base is Bedford. The towns below are the ones the firm named on its own site, plus Luton from the Bark profile, plus Flitwick because council records show work there. If you are just outside this list, call and ask. A guess is not a promise.
+      </p>
+    </div>
+  </section>
+  <section class="section" style="padding-top: 0.5rem">
+    <div class="wrap area-grid">
+      {
+        areas.map((area) => (
+          <a class="area-card" href={`/areas/${area.slug}`}>
+            <p class="meta">{area.county}</p>
+            <h2 style="font-size: 1.6rem">{area.name}</h2>
+            <p>{area.summary}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Base>

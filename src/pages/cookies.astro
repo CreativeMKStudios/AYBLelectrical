@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+
+const title = 'Cookie notice | AYBL Electrical';
+const description = 'AYBL Electrical’s website does not set analytics or advertising cookies.';
+---
+
+<Base title={title} description={description} path="/cookies">
+  <section class="page-hero">
+    <div class="wrap prose">
+      <Crumbs items={[{ href: '/', label: 'Home' }, { label: 'Cookies' }]} />
+      <h1>Cookies</h1>
+      <p>
+        This site does not use analytics, adverts, or a cookie banner that tracks you. It does not set its own cookies.
+      </p>
+      <p>
+        The contact page shows a Google map. Google may set cookies if you interact with that map. If you do not want that, use the address and the directions link instead of the map.
+      </p>
+      <p>
+        Your browser may store this site in its cache. That is a normal part of browsing, and you can clear it in your browser settings.
+      </p>
+    </div>
+  </section>
+</Base>

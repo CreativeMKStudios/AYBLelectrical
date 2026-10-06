@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import { business } from '../data/site';
+import mediaWall from '../assets/photos/media-wall.jpg';
+
+const title = 'About AYBL Electrical | Bedford electrician';
+const description =
+  'AYBL Electrical is run by Antoni Harris from 27 St Cuthbert’s Street, Bedford. The limited company is IN2 Electrical Ltd, number 10161275.';
+---
+
+<Base title={title} description={description} path="/about">
+  <section class="page-hero">
+    <div class="wrap">
+      <Crumbs items={[{ href: '/', label: 'Home' }, { label: 'About us' }]} />
+      <p class="kicker">About us</p>
+      <h1>The firm behind the van and the Google listing</h1>
+      <p class="lede">
+        Two names, one address, one director. If you have seen IN2 Electrical on a van or AYBL Electrical on Google, you have found the same people.
+      </p>
+    </div>
+  </section>
+  <section class="section" style="padding-top: 1.5rem">
+    <div class="wrap two">
+      <div class="stack prose">
+        <p>
+          Antoni Harris has run the business since 2013. IN2 Electrical Ltd was incorporated on 4 May 2016. He is the director. The company number is {business.companyNumber}. The registered office is {business.street}, {business.locality}, {business.postcode}. That is also the address on the Google profile.
+        </p>
+        <p>
+          The old website used the IN2 name and said the team worked to BS 7671, the UK wiring rules. It offered domestic and commercial work, on a fixed quote. Reviews from 2021 and 2022 describe the same habits: on time, clear about the job, and tidy when they leave.
+        </p>
+        <p>
+          Customers name Antoni on most visits. Sam is named on the media wall job. Tom is named on a kitchen. This page does not invent a bigger team than the reviews show.
+        </p>
+        <p>
+          The firm’s own site listed Beds, Herts and Bucks, with named pages for Bedford, Milton Keynes, Harpenden, Hitchin, Leighton Buzzard, Olney and Woburn Sands. Bark also names Luton. Flitwick Town Council’s 2024 purchase lists include AYBL Electrical for a street light, lighting at Lockyer, and CCTV at the Rufus Centre.
+        </p>
+        <p>
+          Hours published by the firm were Monday to Friday, 9am to 5pm, and Saturday, 9am to 1pm. Sunday is closed. Google shows Tuesday as 9am to 5pm, which matches that pattern.
+        </p>
+        <h2>What this site will not pretend</h2>
+        <p>
+          There is no scheme logo on these pages. A current registration number was not on the public Google listing, so none is claimed here. If your job needs a certificate or a Building Control notice, ask how that will be handled before you accept a quote.
+        </p>
+        <p>
+          The home EV grant mentioned in a 2022 review was a scheme of that time. Do not assume it is still open. Ask what applies on the day you book.
+        </p>
+      </div>
+      <aside class="panel">
+        <h2>Company record</h2>
+        <p><strong>{business.legalName}</strong></p>
+        <p>Company number {business.companyNumber}</p>
+        <p>Director {business.director}</p>
+        <p>Appointed 4 May 2016</p>
+        <p>
+          {business.street}<br />
+          {business.locality}<br />
+          {business.postcode}
+        </p>
+        <p>
+          <a href={`tel:${business.phoneTel}`}>{business.phoneDisplay}</a><br />
+          <a href={`mailto:${business.email}`}>{business.email}</a><br />
+          <a href={`mailto:${business.accountsEmail}`}>{business.accountsEmail}</a>
+        </p>
+        <p class="muted">Plus code {business.plusCode}, Bedford.</p>
+        <Image src={mediaWall} alt="Finished media wall with a television and an electric fire." widths={[480, 800]} sizes="(min-width: 980px) 34vw, 100vw" />
+      </aside>
+    </div>
+  </section>
+</Base>
