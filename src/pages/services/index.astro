@@ -1,0 +1,44 @@
+---
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { services } from '../../data/site';
+
+const title = 'Electrical services in Bedford | AYBL Electrical';
+const description =
+  'Rewires, fuse boards, EV chargers, lighting, testing, CCTV and commercial work from AYBL Electrical in Bedford.';
+
+const schema = services.map((service) => ({
+  '@type': 'Service',
+  name: service.title,
+  description: service.summary,
+  url: new URL(`/services/${service.slug}`, Astro.site).href,
+  provider: { '@id': `${Astro.site}#business` },
+  areaServed: 'Bedfordshire',
+}));
+---
+
+<Base title={title} description={description} path="/services" schema={schema}>
+  <section class="page-hero">
+    <div class="wrap">
+      <Crumbs items={[{ href: '/', label: 'Home' }, { label: 'Services' }]} />
+      <p class="kicker">Services</p>
+      <h1>Electrical work for homes and businesses</h1>
+      <p class="lede">
+        These are the jobs the firm has advertised, and the jobs customers have written about. If yours is not on the list, call and describe it.
+      </p>
+    </div>
+  </section>
+  <section class="section" style="padding-top: 1rem">
+    <div class="wrap cards">
+      {
+        services.map((service) => (
+          <a class="card" href={`/services/${service.slug}`}>
+            <h2 style="font-size: 1.5rem">{service.title}</h2>
+            <p>{service.summary}</p>
+            <span class="more">Read about {service.nav.toLowerCase()}</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Base>

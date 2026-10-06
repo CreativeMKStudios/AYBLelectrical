@@ -1,0 +1,72 @@
+---
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { serviceBySlug, services } from '../../data/site';
+
+export function getStaticPaths() {
+  return services.map((service) => ({ params: { slug: service.slug } }));
+}
+
+const { slug } = Astro.params;
+const service = serviceBySlug(slug!);
+if (!service) {
+  throw new Error(`Missing service ${slug}`);
+}
+
+const related = service.related.map((item) => serviceBySlug(item)).filter((item) => item !== undefined);
+const title = `${service.title} | AYBL Electrical`;
+const description = service.meta;
+const schema = [
+  {
+    '@type': 'Service',
+    name: service.title,
+    description: service.summary,
+    url: new URL(`/services/${service.slug}`, Astro.site).href,
+    provider: { '@id': `${Astro.site}#business` },
+    areaServed: ['Bedford', 'Milton Keynes', 'Luton', 'Flitwick'],
+  },
+];
+---
+
+<Base title={title} description={description} path={`/services/${service.slug}`} schema={schema}>
+  <section class="page-hero">
+    <div class="wrap">
+      <Crumbs
+        items={[
+          { href: '/', label: 'Home' },
+          { href: '/services', label: 'Services' },
+          { label: service.title },
+        ]}
+      />
+      <p class="kicker">Services</p>
+      <h1>{service.title}</h1>
+      <p class="lede">{service.intro}</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top: 0.5rem">
+    <div class="wrap two">
+      <div class="prose">
+        {service.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        <p>
+          <a class="btn plain" href="/contact">Ask about this job</a>
+        </p>
+      </div>
+      <aside class="panel">
+        <h2>What this covers</h2>
+        <ul class="checklist">
+          {service.jobs.map((job) => <li>{job}</li>)}
+        </ul>
+        <h2 style="margin-top: 1.6rem">Related work</h2>
+        <ul>
+          {
+            related.map((item) => (
+              <li>
+                <a href={`/services/${item.slug}`}>{item.title}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </aside>
+    </div>
+  </section>
+</Base>

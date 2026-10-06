@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import { business } from '../data/site';
+
+const title = 'Privacy notice | AYBL Electrical';
+const description =
+  'How AYBL Electrical handles your name, phone number and email if you call or write. No tracking cookies on this site.';
+---
+
+<Base title={title} description={description} path="/privacy">
+  <section class="page-hero">
+    <div class="wrap prose">
+      <Crumbs items={[{ href: '/', label: 'Home' }, { label: 'Privacy' }]} />
+      <h1>Privacy notice</h1>
+      <p>
+        This website is for {business.legalName}, company number {business.companyNumber}, of {business.street}, {business.locality}, {business.postcode}. The director is {business.director}.
+      </p>
+      <h2>What this site collects</h2>
+      <p>
+        The site does not have an account, a shop, or an analytics tool. It does not set tracking cookies. If you use the contact form, your email app opens on your device. The message goes to {business.email} only if you send it. This website does not store the form.
+      </p>
+      <h2>If you call or email</h2>
+      <p>
+        We need your name, a phone number or email, the address of the job, and what you want done. That is so the visit can be booked and the quote can be sent. The lawful reason is that you asked for a quote, or that the details are needed to carry out a contract.
+      </p>
+      <p>
+        Quotes, invoices and test results are kept for as long as the company needs them for the job, the warranty conversation, tax, and any legal claim. They are not sold. They are not used for a mailing list unless you ask to be contacted again.
+      </p>
+      <h2>Your choices</h2>
+      <p>
+        You can ask what details are held about you, ask for a correction, or ask for deletion where the law allows it. Write to {business.email}. You can also complain to the Information Commissioner’s Office at ico.org.uk.
+      </p>
+      <p>This notice was written for the new site in October 2026.</p>
+    </div>
+  </section>
+</Base>

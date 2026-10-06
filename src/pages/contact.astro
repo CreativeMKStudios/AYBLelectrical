@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import { business, services } from '../data/site';
+
+const title = 'Contact AYBL Electrical | Bedford';
+const description =
+  'Call AYBL Electrical on 01234 862212 or email antoni@ayblelectrical.co.uk. 27 St Cuthbert’s Street, Bedford, MK40 3JG.';
+
+const schema = [
+  {
+    '@type': 'ContactPage',
+    name: 'Contact AYBL Electrical',
+    url: new URL('/contact', Astro.site).href,
+    about: { '@id': `${Astro.site}#business` },
+  },
+];
+---
+
+<Base title={title} description={description} path="/contact" schema={schema}>
+  <section class="page-hero">
+    <div class="wrap">
+      <Crumbs items={[{ href: '/', label: 'Home' }, { label: 'Contact us' }]} />
+      <p class="kicker">Contact</p>
+      <h1>Book a technician</h1>
+      <p class="lede">
+        The fastest way is the phone. If you email, include the town, what has failed or what you want fitted, and a photo of the fuse board if you have one.
+      </p>
+    </div>
+  </section>
+  <section class="section" style="padding-top: 0.4rem">
+    <div class="wrap two">
+      <form class="panel" action={`mailto:${business.email}`} method="post" enctype="text/plain">
+        <h2>Send the job</h2>
+        <div class="form-row">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" autocomplete="name" required />
+          </div>
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" required />
+          </div>
+        </div>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required />
+        <div class="form-row">
+          <div>
+            <label for="town">Town</label>
+            <input id="town" name="town" required />
+          </div>
+          <div>
+            <label for="job">Job</label>
+            <select id="job" name="job">
+              <option>Not sure yet</option>
+              {services.map((service) => <option>{service.title}</option>)}
+            </select>
+          </div>
+        </div>
+        <label for="message">What do you need?</label>
+        <textarea id="message" name="message" required></textarea>
+        <button class="btn plain" type="submit">Email this enquiry</button>
+        <p class="muted">This opens your email app, addressed to {business.email}. Nothing is stored on this website.</p>
+      </form>
+      <aside class="panel">
+        <h2>Talk to a person</h2>
+        <p>
+          <a href={`tel:${business.phoneTel}`}><strong>{business.phoneDisplay}</strong></a>
+        </p>
+        <p>
+          <a href={`mailto:${business.email}`}>{business.email}</a><br />
+          <a href={`mailto:${business.accountsEmail}`}>{business.accountsEmail}</a><br />
+          <a href={`mailto:${business.infoEmail}`}>{business.infoEmail}</a>
+        </p>
+        <h2>Visit or write</h2>
+        <address>
+          {business.name}<br />
+          {business.street}<br />
+          {business.locality}<br />
+          {business.postcode}
+        </address>
+        <table class="hours">
+          <caption class="sr-only">Opening hours</caption>
+          <tbody>
+            {
+              business.hourRows.map((row) => (
+                <tr>
+                  <th scope="row">{row.day}</th>
+                  <td>{row.time}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+        <p>
+          <a href={business.mapsUrl}>Get directions on Google</a>
+        </p>
+      </aside>
+    </div>
+    <div class="wrap map">
+      <iframe
+        title="Map of AYBL Electrical at 27 St Cuthbert's Street, Bedford"
+        src="https://maps.google.com/maps?q=52.1386194,-0.4629254&z=16&output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+</style>

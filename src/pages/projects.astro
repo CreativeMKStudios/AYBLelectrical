@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import { projects } from '../data/site';
+
+const title = 'Electrical projects | AYBL Electrical';
+const description =
+  'Job photos from AYBL Electrical, also known as IN2 Electrical. Media walls, lighting, a Milton Keynes kiosk, CCTV and new-build visits.';
+---
+
+<Base title={title} description={description} path="/projects">
+  <section class="page-hero">
+    <div class="wrap">
+      <Crumbs items={[{ href: '/', label: 'Home' }, { label: 'Projects' }]} />
+      <p class="kicker">Projects</p>
+      <h1>Photos the firm has already published</h1>
+      <p class="lede">
+        These twelve pictures are from the IN2 Electrical website gallery. They are the company’s own job photos. Captions stick to what the picture shows, plus the review or record that names the job.
+      </p>
+    </div>
+  </section>
+  <section class="section" style="padding-top: 0.5rem">
+    <div class="wrap gallery">
+      {
+        projects.map((project) => (
+          <article>
+            <Image src={project.image} alt={project.alt} widths={[480, 800]} sizes="(min-width: 980px) 32vw, 100vw" />
+            <div>
+              <p class="meta">
+                {project.place} · {project.year}
+              </p>
+              <h2 style="font-size: 1.45rem">{project.title}</h2>
+              <p>{project.text}</p>
+              <p>
+                <a href={`/services/${project.service}`}>Related service</a>
+              </p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+    <div class="wrap prose" style="margin-top: 2rem">
+      <h2>Work named in public records</h2>
+      <p>
+        Flitwick Town Council publishes payments over £500. In 2024 those lists name AYBL Electrical for a faulty street light, a first instalment of lighting work at Lockyer, and a CCTV system at the Rufus Centre. There is no photo of those sites here, so they are not dressed up as a gallery.
+      </p>
+    </div>
+  </section>
+</Base>

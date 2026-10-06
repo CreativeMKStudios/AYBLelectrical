@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import { business, reviews } from '../data/site';
+
+const title = 'AYBL Electrical reviews | Google and Bark';
+const description =
+  'Public reviews of AYBL Electrical, also called IN2 Electrical. Google rating 4.6 from 18 reviews. Read a selection and the Google listing.';
+---
+
+<Base title={title} description={description} path="/reviews">
+  <section class="page-hero">
+    <div class="wrap">
+      <Crumbs items={[{ href: '/', label: 'Home' }, { label: 'Reviews' }]} />
+      <p class="kicker">Reviews</p>
+      <h1>4.6 from 18 Google reviews</h1>
+      <p class="lede">
+        The score comes from the Google listing for AYBL Electrical. The words below are public reviews from Google and from the firm’s Bark page. Spelling is left as the reviewer wrote it. This is not the full set of 18.
+      </p>
+      <p>
+        <a class="btn plain" href={business.reviewsUrl}>Open the Google reviews</a>
+      </p>
+    </div>
+  </section>
+  <section class="section" style="padding-top: 0.5rem">
+    <div class="wrap review-grid">
+      {
+        reviews.map((review) => (
+          <figure class="review-card">
+            <div class="stars" aria-label={`${review.rating} out of 5`}>
+              {'★'.repeat(review.rating)}
+              {'☆'.repeat(5 - review.rating)}
+            </div>
+            <blockquote>
+              <p>{review.text}</p>
+            </blockquote>
+            <footer>
+              <span>{review.name}</span>
+              <span>
+                {review.source} · {review.date}
+              </span>
+            </footer>
+          </figure>
+        ))
+      }
+    </div>
+  </section>
+</Base>
